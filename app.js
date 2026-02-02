@@ -2,7 +2,21 @@ const express = require('express');
 
 const app = express();
 
-app.use('/hello', (req, res) => {
+app.use(express.json());
+
+// this will only handle to get call to /user
+app.get('/user', (req, res) => {
+  res.send({ first_name: 'Nishant', last_name: 'Modi'})
+})
+app.post('/user', (req, res) => {
+  res.send('post data is successfully!');
+});
+app.delete('/user', (req, res) => {
+  res.send('delete data is successfully!');
+});
+
+//this will match all the http method api
+app.use('/test', (req, res) => {
   res.send('hellow from the server coming!!')
 })
 
