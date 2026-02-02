@@ -8,10 +8,17 @@ app.use(express.json());
 app.get('/user', (req, res) => {
   res.send({ first_name: 'Nishant', last_name: 'Modi'})
 })
+
+// params
+// app.get('/a/:b?/c', (req, res) => {
+//   res.send({ first_name: 'Nishant', last_name: 'Modi'})
+// })
+
 app.post('/user', (req, res) => {
   res.send('post data is successfully!');
 });
-app.delete('/user', (req, res) => {
+app.delete('/user/:userId', (req, res) => {
+  console.log(req.params)
   res.send('delete data is successfully!');
 });
 
