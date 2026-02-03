@@ -1,23 +1,46 @@
 const express = require('express');
+const { adminAuth, userAuth } = require('./middleware/auth');
 
 const app = express();
 
-// app.use("/route", rH1, rH2, rH3, ...)
+app.get("/getUserData", (req, res) => {
+  // login for db call
+  throw new Error("showing error")
+  res.send("user data sent")
+})
+
+app.use('/', (err, req, res, next) => {
+  if(err){
+    res.status(500).send('Something went wrong!!')
+  }
+})
+
+app.use('/admin', adminAuth)
+app.use('/user', userAuth, (req, res) => {
+  res.send('send data from user')
+})
+
+app.get('/admin', (req, res, next) => {
+  res.send('Add data is now send from other router')
+})
+
+
+// app.use("/route", rH1, rH2, rH3, rH4, rH5)
 // app.use("/route", [rH1, rH2, rH3])
 // app.use("/route", [rH1, rH2], rH3)
 
 // we can also send array of function
-app.use("/user", 
-  [(req, res, next) => {
-    console.log('kfdsj')
-    res.send("route handler 1")
-    next()
-  },
-  (req, res) => {
-    console.log('kfdsj')
-    res.send("route handler 2")
-  }],
-);
+// app.use("/user", 
+//   [(req, res, next) => {
+//     console.log('kfdsj')
+//     res.send("route handler 1")
+//     next()
+//   },
+//   (req, res, next) => {
+//     console.log('kfdsj')
+//     res.send("route handler 2")
+//   }],
+// );
 
 // this will only handle to get call to /user
 // app.get('/user', (req, res) => {
