@@ -1,0 +1,72 @@
+- create repository
+- initialise the repository
+- node_module, package.json, package-lock.json,
+- install express
+- create a server
+- listen to port 8080
+- write request handlers for /test, /hello
+- install nodemon and update script inside package.json 
+- what are dependencies
+- what are the use of "-g"  while npm install
+- difference between caret and tilde (^ and ~)
+
+- initialise git
+- .gitignore
+- create a remote repo on github
+- push all code to remote origin
+- play with route and routes extensions ex. /hello / /test /xyz
+- order of route matter
+- install postman and make a workspace/collection > test api call 
+- use of regex in routes
+- reading the query params
+
+- multiple route Handlers - play with the code
+- next()
+- next functiona and error along with res.send()
+- app.use("/route", rH1, rH2, rH3, rH4, rH5)
+- what is middleware
+- how express js basically handles requests behind the scenes
+- what is difference between app.use and app.all
+- write a dummy auth middleware for admin
+- write a dummy auth middleware for all user route except login page
+- error handling using: app.use('/', (err, req, res, next)
+
+- create a free cluster on mongodb official website(mongo atlas) 
+- Install mongoose library
+- connect your application to the database connection url /devTinder
+- call the connectDB function and connect to database before starting application on 8080
+- create a user schema and user modal  
+- create POST /signup API to add data to database
+- push some document from api calls from postman
+- error handling using try - catch
+
+- difference between js object vs JSON
+- add express.json middleware in your app
+- make your signup api dynamic to recieve data from the end user
+- user.findOne with duplicate emailId's, which object returned
+- API Get user by emailId
+- API /feed api - get /feed - get all the users from the database 
+- API /getUserById 
+- create a delete user api
+- difference between patch and put
+- API - update a user
+- explore mongoose from modal method
+- what are options in a Modal.findOneAndUpdate. explore more about initialise
+- API - update the user api with 
+
+- explore schema type option form the documanrtation
+- add required, unique, lowercase, min, minLength, trim
+- add default
+- create a custom validate function for gender
+- improve the db schema - put all appropriate validations, on each foeld of schema
+- add timestamps to the user schema
+- add api lavel validation on patch requenst and signup post api
+- Data sanitization: add api validation for each field
+- intall validator
+- explore validator library and add email validation, url validation using the library
+
+- validate data in signup api
+- install bcrypt library package
+- create passwordHash using bcrypt.hash() and save the user with encrypted password
+- create login api
+- compare password
