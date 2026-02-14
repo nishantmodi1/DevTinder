@@ -70,3 +70,9 @@
 - create passwordHash using bcrypt.hash() and save the user with encrypted password
 - create login api
 - compare password
+
+- insatll cookie-parser
+- send dummy cookie
+- create GET /profile api and check if get cookie back
+- in login api, after email and password validation, create a JWT token and send back to user
+- read the cookie inside your profile API and find the logged in user

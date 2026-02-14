@@ -4,69 +4,32 @@ const User = require('./src/models/user');
 require("./src/config/database");
 const { validateSignupData } = require('./src/utils/Validation')
 const bcrypt = require('bcrypt');
-
+const cookieParser = require('cookie-parser')
 const app = express();
+const jwt = require("jsonwebtoken");
+const user = require('./src/models/user');
+const { userAuth } = require('./src/middleware/auth')
 
 app.use(express.json())
-
-app.post('/login', async(req, res) => {
-  try{
-    const {emailId, password} = req.body;
-    // sanitizing the data: email and password
-    console.log('emailId password', emailId, password)
-    const user = await User.findOne({emailId: emailId})
-    console.log('user>>', user, password, user.password)
-    if(!user){
-      throw new Error('user not found')
-    }
-    isPasswordValid = await bcrypt.compare(password, user.password)
-    console.log('isPasswordValid', isPasswordValid)
-    if(isPasswordValid) {
-      res.send('login successful')
-    }else {
-      throw new Error('invalid credentials')
-    }
-  }catch(error) {
-    console.log('error>>>', error)
-    // res.status(400).send('something went wrong', error)
-    res.status(400).json({ message: error.message})
-  }
-})
+app.use(cookieParser())
 
 //sign up api
 app.post('/signup', async(req, res, next) => {
   // validation of data
   validateSignupData(req)
 
-
-
   const {firstName, lastName, emailId, password } = req.body;
 
   // encrypt the password
   const passwordHash = await bcrypt.hash(password, 10);
-  console.log(passwordHash);
 
   //creating a new instance of user model
-  const userObj = {
-    firstName,
-    lastName,
-    emailId,
-    password: passwordHash
-  }
-
   const user = new User({
     firstName,
     lastName,
     emailId,
     password: passwordHash
   });
-   
-  // const userObj = {
-  //   firstName: 'John',
-  //   lastName: "Doe",
-  //   emailId: "john@gmail.com",
-  //   password: "1234"
-  // }
 
   // const user = new User(req.body);
   try {
@@ -74,6 +37,61 @@ app.post('/signup', async(req, res, next) => {
     res.send("user Signup successfully")
   } catch (error) {
     res.status(400).send("error saving the user")
+  }
+})
+
+app.post('/login', async(req, res) => {
+  try{
+    const {emailId, password} = req.body;
+    // sanitizing the data: email and password
+    console.log('emailId password', emailId, password)
+    const user = await User.findOne({emailId: emailId})
+    if(!user){
+      throw new Error('user not found')
+    }
+    isPasswordValid = await bcrypt.compare(password, user.password)
+    if(isPasswordValid) {
+      //create a JWT token: here jwt.sign({ name, private_key})
+      const token = await jwt.sign({ _id: user._id}, "DEV@TINDER8987")
+
+      // add then token to cookies and send the response back to the user
+      res.cookie("token", token)
+      res.send('login successful')
+    }else {
+      throw new Error('invalid credentials')
+    }
+  }catch(error) {
+    // res.status(400).send('something went wrong', error)
+    res.status(400).json({ message: error.message})
+  }
+})
+
+// GET PROFILE
+app.get('/profile', userAuth, async(req, res,) => {
+  try {
+    const cookie = req.cookies;
+    const {token} = cookie
+    if(!token){
+      throw new Error("Invalid Token")
+    }
+    //validate the token
+    const decodedMessage = await jwt.verify(token, "DEV@TINDER8987")
+    console.log(decodedMessage)
+    const {_id} = decodedMessage
+    console.log('users id is: ', _id)
+    const user = await User.findById(_id)
+    console.log('user>>>', user)
+
+    if(!user){
+      throw new Error("User not exist")
+    }
+
+    console.log(cookie)
+    res.send(users)
+  } catch (error) {
+    console.log('error>>>', error)
+    // res.status(400).send('something went wrong', error)
+    res.status(400).json({ message: error.message})
   }
 })
 
