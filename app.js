@@ -49,10 +49,10 @@ app.post('/login', async(req, res) => {
     if(!user){
       throw new Error('user not found')
     }
-    isPasswordValid = await bcrypt.compare(password, user.password)
+    isPasswordValid = await user.validatePassword(password)
     if(isPasswordValid) {
-      //create a JWT token: here jwt.sign({ name, private_key})
-      const token = await jwt.sign({ _id: user._id}, "DEV@TINDER8987")
+      //create a JWT token: here jwt.sign({ name, private_key/secret_key})
+      const token = await user.getJWT()
 
       // add then token to cookies and send the response back to the user
       res.cookie("token", token)
@@ -69,25 +69,8 @@ app.post('/login', async(req, res) => {
 // GET PROFILE
 app.get('/profile', userAuth, async(req, res,) => {
   try {
-    const cookie = req.cookies;
-    const {token} = cookie
-    if(!token){
-      throw new Error("Invalid Token")
-    }
-    //validate the token
-    const decodedMessage = await jwt.verify(token, "DEV@TINDER8987")
-    console.log(decodedMessage)
-    const {_id} = decodedMessage
-    console.log('users id is: ', _id)
-    const user = await User.findById(_id)
-    console.log('user>>>', user)
-
-    if(!user){
-      throw new Error("User not exist")
-    }
-
-    console.log(cookie)
-    res.send(users)
+    const user = req.user
+    res.send(user)
   } catch (error) {
     console.log('error>>>', error)
     // res.status(400).send('something went wrong', error)
@@ -95,88 +78,14 @@ app.get('/profile', userAuth, async(req, res,) => {
   }
 })
 
-// get user by email
-app.get('/user', async (req, res) => {
-  const userEmaild = req.body.emailId
+app.post('/sendConnectionRequest', userAuth, (req, res) => {
   try {
-    // const user = await User.findOne({ emailId: userEmaild })
-    const users = await User.find({ emailId: userEmaild })
-    if(users.length === 0) {
-      res.status(404).send('user not found')
-    }
-    res.send(users)
+    const user = req.user
+    //sending a connection request
+    console.log(user.firstName)
+    res.send(user.firstName + " send the connection request")
   } catch (error) {
-    res.status(400).send('something went wrong')
-  }
-})
-
-// feed api - get all feed data
-app.get('/feed', async (req, res, next) => {
-  try {
-     const users = await User.find({ })
-     res.send(users)
-  } catch (error) {
-    res.status(400).send('something went wrong')
-  }
-})
-
-// delete a user by findByIdandDelete
-app.delete("/user", async(req, res) => {
-  const userId = req.body.userId
-  try {
-    // const user = await User.findByIdAndDelete({_id: userId}) //same to blelow user
-    const user = await User.findByIdAndDelete({userId})
-  } catch (error) {
-    res.status(400).send('something went wrong')
-  }
-})
-
-//update user data
-
-// app.patch('/user', async(req, res,) => {
-//   // const userId = req.body._id
-//   const userId = req.body.userId
-//   const data = req.body;
-//   try {
-    
-//       const ALLOWED_UPDATES = ['firstName', 'lastName', 'emailId', 'password']
-//       const isUpdateAllowed = Object.keys(data).every(update => ALLOWED_UPDATES.includes(update))
-//       if(!isUpdateAllowed) {
-//         throw new Error('invalid updates')
-//       }
-//     await User.findByIdAndUpdate({_id: userId}, data, {
-//       reurnDocument: 'after',
-//       runValidators: true
-//     }) 
-//     res.send('send user successfully')
-//   } catch (error) {
-//     res.status(400).send('something went  wrong')
-//   }
-// })
-
-app.patch('/user/:userId', async(req, res,) => {
-  // const userId = req.body._id
-  const userId = req.params?.userId
-  const data = req.body;
-  try {
-    
-      const ALLOWED_UPDATES = ['firstName', 'lastName', 'emailId', 'password']
-      const isUpdateAllowed = Object.keys(data).every(update => ALLOWED_UPDATES.includes(update))
-      if(!isUpdateAllowed) {
-        throw new Error('invalid updates')
-      }
-      // add condition to allow only 10 skills only
-      if(data.skills.length > 10){
-        throw new Error('cannot add more than 10 skills')
-      } {
-    await User.findByIdAndUpdate({_id: userId}, data, {
-      reurnDocument: 'after',
-      runValidators: true
-    }) 
-    res.send('send user successfully')
-  } }
-  catch(error) {
-    res.status(400).send('something went  wrong')
+    res.status(400).send('something went wrong: ' + error.message)
   }
 })
 

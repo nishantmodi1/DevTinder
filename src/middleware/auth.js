@@ -18,11 +18,11 @@ const userAuth = async(req, res, next) => {
     if(!user) {
       throw new Error("Invalid User/user not found")
     }
+    req.user = user
     // next is use for move to the request handler
     next()
   } catch (error) {
-    // console.log('error>>>', error)
-    res.status(400).send('something went wrong', error.message)
+    res.status(400).send('something went wrong: ' + error.message)
     // res.status(400).json({ message: error.message})
   }
 }

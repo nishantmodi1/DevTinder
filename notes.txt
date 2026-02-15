@@ -76,3 +76,8 @@
 - create GET /profile api and check if get cookie back
 - in login api, after email and password validation, create a JWT token and send back to user
 - read the cookie inside your profile API and find the logged in user
+- write user auth middleware
+- add userAuth middleware in profile api and new secconnection requests
+- set the expiry of JWT token and cookie to 7 days
+- craete userSchema methods to getJWT()
+- create uesrSchema methods for isPasswordValid with bcrypt()
