@@ -62,4 +62,15 @@ authRouter.post('/login', async(req, res) => {
   }
 })
 
+authRouter.post('/logout', async (req, res) => {
+  try {
+    //both work fine, also here try catch is not required
+    // res.cookie("token", null, {expiresIn: new Date(Date.now())})
+    res.cookie("token", null, {expires: new Date(Date.now())})
+    res.send("logout successfully")
+  } catch (error) {
+    res.status(400).send("logout Error")
+  }
+})
+
 module.exports = authRouter;

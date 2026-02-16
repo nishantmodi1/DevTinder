@@ -89,3 +89,17 @@
 - create route folder for managing auth, profile, request routers
 - create authRouter, profileRouter, requestRouter
 - import these Routers in app.js
+- create POST logout API
+- create PATCH /profile/edit
+- create PATCH /profile/forgot_password API
+- test all apis
+- make sure validate all data in POST, PATCH APIs
+
+- create a connectionSchemas
+- send connection request properly
+- add proper validation of data
+- think about all possible corner cases
+- $or query in mongoose
+- schemas .pre("save" function) function
+- what is advantages and disadvantages
+- Read the article about compound indexes from browser from mongoose docs
