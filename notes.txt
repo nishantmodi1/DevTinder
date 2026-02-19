@@ -103,3 +103,25 @@
 - schemas .pre("save" function) function
 - what is advantages and disadvantages
 - Read the article about compound indexes from browser from mongoose docs
+
+- write code for proper validation /request/review/accepted/
+- thought process - POST vs GET
+- learn diff bet .find(): find returns an array and .findOne() return a object in mongoose
+- explore ref, populate in mongoose
+- create GET /user/requests/received with all checks
+- create GET /user/connections
+
+- logic for GET /feed API
+- explore the $nin, $ne, $and and other queries operators
+- pagination
+- req.query => '/feed?limit=3 here limit is query vs req.params => '/feed/:abc here abc is params
+
+NOTES:
+
+/feed?page=1&limit=10 =>  1-10 => .skip(0) & .limit(10)
+
+/feed?page=2&limit=10 => 11-20 => .skip(10) & .limit(10)
+
+/feed?page=3&limit=10 => 21-30 => .skip(20) & .limit(10)
+
+skip = (page - 1)*limit
