@@ -16,3 +16,8 @@
  - show data in store
  - navbar should be update as soon as user login
  - refactor our code to add constants file + add a components file 
+ - you shpuld not be able to access other without login 
+ - if login is not present, redirect to login page
+ - logout
+ - profile page
+ - if token not present redirect user to login page

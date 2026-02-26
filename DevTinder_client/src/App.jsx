@@ -4,6 +4,8 @@ import Login from "./page/authpage/Login"
 import Layout from "./components/layout/Layout"
 import { Provider } from 'react-redux'
 import { store } from "./utils/appStore"
+import Profilt from "./page/Profile"
+import Profile from "./page/Profile"
 
 
 function App() {
@@ -15,6 +17,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Layout />}>
               <Route path='/login' element={<Login />} />
+              <Route path='/profile' element={<Profile />} />
             </Route>
           </Routes>
         </BrowserRouter>
