@@ -12,8 +12,7 @@ const Layout = () => {
   const navigate = useNavigate()
   const userData = useSelector((store) => store.user)
   const fetcUser = async() => {
-    console.log("user profile view")
-    if(userData) return;
+    if(!userData) return;
     try {
       const user = await axios.get(`${BASE_URL}profile/view`, {withCredentials:true})
       dispatch(addUser(user.data))
@@ -21,13 +20,12 @@ const Layout = () => {
       if(error.status === 401){
         navigate('/login')
       }
-      console.log("error logout", error)
+      console.log("error logout", error.status)
     }
   }
 
   useEffect(() => {
     if(!userData){
-
       fetcUser()
     }
   }, [])

@@ -7,16 +7,22 @@ import { useNavigate } from 'react-router-dom'
 const Login = () => {
   const [emailId, setEmailId] = useState('priya.reddy22@example.com')
   const [password, setPassword] = useState('Priya@456')
+  const [error, setError] = useState('');
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleLogin = async() => {
-    const res = await axios.post("http://localhost:8000/login", {
-      emailId, password 
-    }, {withCredentials: true})
-    console.log(res) 
-    navigate('/')
-    dispatch(addUser(res.data))
+    try {
+      const res = await axios.post("http://localhost:8000/login", {
+        emailId, password 
+      }, {withCredentials: true})
+      console.log(res) 
+      navigate('/')
+      dispatch(addUser(res.data))  
+    } catch (error) {
+      setError("Invalid credentials")
+      console.error("error login: ", error);
+    }
   }
 
   console.log(emailId, password)
@@ -30,7 +36,7 @@ const Login = () => {
 
         <label className="label">Password</label>
         <input type="password" className="input" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-
+        {error && <p style={{color:'red'}}>{error}</p>}
         <button className="btn btn-neutral mt-4" onClick={handleLogin}>Login</button>
       </fieldset>
     </div>

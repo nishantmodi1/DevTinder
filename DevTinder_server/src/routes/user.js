@@ -91,7 +91,7 @@ userRouter.get('/user/feed', userAuth, async(req, res) => {
     // .populate("fromUserId", "firstName").populate("toUserId", "firstName")
 
     console.log(users)
-    res.send(users)
+    res.send({data: users})
   } catch (error) {
     res.status(400).json({ message: error.message})
   }
