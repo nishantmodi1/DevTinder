@@ -2,12 +2,23 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BASE_URL } from '../../utils/constants'
 import axios from 'axios'
-import { addRequest } from '../../utils/requestSlice'
-
+import { addRequest, removeRequest } from '../../utils/requestSlice'
 
 const Requests = () => {
   const requests = useSelector(store=> store.request)
   const dispatch =useDispatch()
+  
+
+  const handleReviewRequests = async(status, requestId) => {
+    try {
+      const res = await axios.post(`${BASE_URL}request/review/${status}/${requestId}`, {}, {withCredentials:true})
+      dispatch(removeRequest(requestId))
+      console.log(res.data)
+    } catch (error) {
+      console.error('error', error)
+    }
+  }
+
   const fetchRequests = async() => {
     try {
       const res= await axios.get(`${BASE_URL}user/requests/received`, {withCredentials:true})
@@ -23,7 +34,7 @@ const Requests = () => {
   }, [])
   console.log('requests>>>', requests)
   if(!requests) return;
-  if(requests.length === 0) return <div>No Requests Found</div>
+  if(requests.length === 0) return <div className='flex justify-center items-center my-20'>No Requests Found</div>
 
   return (
     <div className='text-center my-10 '>
@@ -35,13 +46,13 @@ const Requests = () => {
         key={request._id}>
           <img src={photoUrl} alt="user" className='w-16 h-16 rounded-full object-cover' />
           <div className='flex flex-col'>
-            <h2 className='text-lg font-bold'>{firstName} {lastName}</h2>
+            <h2 className='text-lg font-bold text-start'>{firstName} {lastName}</h2>
             <p className='text-sm text-left'>{age && age + ", "}{gender}</p>
             <p className='text-sm text-left'>{about}</p>
           </div>
           <div className='flex gap-2 justify-end ml-auto'>
-            <button className="btn btn-primary">Primary</button>
-            <button className="btn btn-secondary">Secondary</button>
+            <button onClick ={() => handleReviewRequests('accepted', request._id)} className="btn btn-secondary">Accept</button>
+            <button onClick ={() =>handleReviewRequests('rejected', request._id)} className="btn btn-primary">Reject</button>
           </div>
         </div>
       )
