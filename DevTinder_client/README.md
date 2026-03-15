@@ -28,8 +28,6 @@
  - see all my connections in new page 
  - see all my connetion reqeusts in new page 
  - feature - accept/reject connection request
-
- remaining-
-  send/ignore the user card feed 
-  signup
-  testing
+ - feature - send/ignore the user card feed 
+ - add signup
+ - testing

@@ -19,7 +19,7 @@ function App() {
         <BrowserRouter basename="/">
           <Routes>
             <Route path='/' element={<Layout />}>
-              <Route path='/' element={<FeedPage />} />
+              <Route path='/feed' element={<FeedPage />} />
               <Route path='/login' element={<Login />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/connections' element={<Connections />} />

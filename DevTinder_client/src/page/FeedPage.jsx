@@ -12,7 +12,7 @@ const FeedPage = () => {
     if(feed && feed.length > 0) return;
     try {
       const res = await axios.get(`${BASE_URL}user/feed`, {withCredentials: true})
-      dispatch(addFeed(res.data))
+      dispatch(addFeed(res.data.data))
     } catch (error) {
       console.error("error fetching feed data", error)
     }
@@ -21,11 +21,13 @@ const FeedPage = () => {
   useEffect(() => {
     getFeed()
   }, [])
+
+  if(!feed || feed.length === 0) return <div>No more users found</div>
   
   return (
-    feed &&  (<div className='flex justify-center my-10 gap-4'>
-      <UesrCard user={feed?.data[0]} />
-    </div>)
+    <div className='flex justify-center my-10 gap-4'>
+      <UesrCard user={feed[0]} />
+    </div>
   )
 }
 
