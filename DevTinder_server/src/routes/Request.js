@@ -65,7 +65,6 @@ requestRouter.post('/request/review/:status/:requestId', userAuth, async(req, re
       toUserId: loggedInUser._id,
       status: "interested"
     })
-    console.log("check this line process")
     if(!connectionRequest) {
       return res.status(404).json({message: "Connection request not found"})
     }

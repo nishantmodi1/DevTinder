@@ -16,16 +16,14 @@ const Login = () => {
       const res = await axios.post("http://localhost:8000/login", {
         emailId, password 
       }, {withCredentials: true})
-      console.log(res) 
       navigate('/')
-      dispatch(addUser(res.data))  
+      dispatch(addUser(res.data))
     } catch (error) {
       setError("Invalid credentials")
       console.error("error login: ", error);
     }
   }
 
-  console.log(emailId, password)
   return (
     <div className='flex justify-center my-20'>
       <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">

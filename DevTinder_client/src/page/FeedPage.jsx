@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { BASE_URL } from '../utils/constants'
 import { addFeed } from '../utils/feedSlice'
-import UesrCard from '../components/cards/UesrCard'
+import UesrCard from '../components/cards/UserCard'
 
 const FeedPage = () => {
   const dispatch = useDispatch()
@@ -21,7 +21,7 @@ const FeedPage = () => {
   useEffect(() => {
     getFeed()
   }, [])
-  console.log('feed>>>', feed)
+  
   return (
     feed &&  (<div className='flex justify-center my-10 gap-4'>
       <UesrCard user={feed?.data[0]} />

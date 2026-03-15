@@ -10,7 +10,7 @@ profileRouter.get('/profile/view', userAuth, async(req, res,) => {
     const user = req.user
     res.send(user)
   } catch (error) {
-    console.log('error>>>', error)
+    console.error('error>>>', error)
     // res.status(400).send('something went wrong', error)
     res.status(400).json({ message: error.message})
   }
@@ -23,7 +23,6 @@ profileRouter.patch('/profile/edit', userAuth, async(req, res) => {
       throw new Error("Invalid Edit Request");
     }
     const loggedInUser = req.user  //this is details of loggedin User
-    console.log(loggedInUser)
     // loggedInUser.firstName = req.body.firstName;
     Object.keys(req.body).forEach(key => loggedInUser[key] = req.body[key])
 
@@ -52,7 +51,7 @@ profileRouter.patch('/profile/forgot_password', userAuth, async(req, res) => {
     loggedInUser.password = newPassword
     // save password in db
     await loggedInUser.save()
-    console.log('hello>>>', isPasswordValid,  req.body)
+    // console.log('hello>>>', isPasswordValid,  req.body)
     res.json({message: "password updated successfully"})
   }catch(error){
     res.status(400).send("Error forgot password " + error.message)

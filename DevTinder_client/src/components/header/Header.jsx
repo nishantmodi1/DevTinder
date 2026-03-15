@@ -7,7 +7,6 @@ import { removeUser } from '../../utils/userSlice'
 
 const Header = () => {
   const user = useSelector(store=> store.user)
-  console.log('user', user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -17,7 +16,7 @@ const Header = () => {
       dispatch(removeUser())
       navigate('/login')
     } catch (error) {
-      console.log('error', error)
+      console.error('error', error)
     }
   }
   return (

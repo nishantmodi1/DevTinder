@@ -18,6 +18,11 @@
  - refactor our code to add constants file + add a components file 
  - you shpuld not be able to access other without login 
  - if login is not present, redirect to login page
- - logout
  - profile page
  - if token not present redirect user to login page
+ - logout feature
+ - get the feed and add te feed in the store
+ - build the user card on feed
+ - edit profile feature
+ - show toast on save edit profile
+ - see all my connection in page 

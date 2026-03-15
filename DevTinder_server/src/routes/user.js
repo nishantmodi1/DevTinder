@@ -8,10 +8,8 @@ const USER_SAFE_DATA = "firstName lastName photoUrl age gender about skills"
 
 //get all the  pending connection Request from the loggedInUser
 userRouter.get("/user/requests/received", userAuth, async(req, res) => {
-  console.log('processing')
   try {
     const loggedInUser = req.user
-    console.log(loggedInUser)
     const connectionRequest = await ConnectionRequest.find({
       toUserId: loggedInUser._id,
       status: "interested"
@@ -89,8 +87,6 @@ userRouter.get('/user/feed', userAuth, async(req, res) => {
       ]
     }).select(USER_SAFE_DATA).skip(skip).limit(limit)
     // .populate("fromUserId", "firstName").populate("toUserId", "firstName")
-
-    console.log(users)
     res.send({data: users})
   } catch (error) {
     res.status(400).json({ message: error.message})
