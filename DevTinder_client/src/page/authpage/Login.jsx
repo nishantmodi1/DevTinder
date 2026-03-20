@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addUser } from '../../utils/userSlice'
 import { useNavigate } from 'react-router-dom'
+import { BASE_URL } from '../../utils/constants'
 
 const Login = () => {
   const [firstName, setFirstName] = useState('')
@@ -18,13 +19,13 @@ const Login = () => {
   const handleLogin = async() => {
     try {
       if(isLogin){
-        const res = await axios.post("http://localhost:8000/login", {
+        const res = await axios.post(`${BASE_URL}login`, {
           emailId, password 
         }, {withCredentials: true})
         navigate('/feed')
         dispatch(addUser(res.data))
       }else{
-        const res = await axios.post("http://localhost:8000/signup", {
+        const res = await axios.post( `${BASE_URL}signup`, {
           firstName, lastName, emailId, password 
         }, {withCredentials: true})
         navigate('/profile')
