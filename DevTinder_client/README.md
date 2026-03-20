@@ -31,3 +31,69 @@
  - feature - send/ignore the user card feed 
  - add signup
  - testing
+
+ ## Deployment
+ - sign up in AWS
+ - Launch Instance
+ - create secret key pair
+ - wait for status check from initializing to complete
+ - Modify/change the permissions: chmod 400 <secret>.pem
+ - in local terminal: Nishanth@VENW-010 MINGW64 ~/Downloads 
+    $ chmod 400 dev-secret.pem
+ - connect to the machine through ssh: ssh -i "dev-secret.pem" ubuntu@ec2-13-53-206-149.eu-north-1.compute.amazonaws.com
+ - install node version (similar of local node version)  
+ - git clone in aws server engine
+    ## Frontend
+    - cd frontend _client
+    - npm install then npm run build (for bundling the project)
+    - sudo apt update
+    - sudo apt install nginx
+    - sudo systemctl start nginx
+    - sudo systemctl enable nginx
+    - copy code from dist folder(build files) to http nginx: /var/www/html/  :  index.nginx-debian.html
+    - ubuntu@ip-172-31-34-123:~/DevTinder/DevTinder_client$ sudo scp -r dist/* /var/www/html/
+    - Enable port 80 on my Instance
+
+   ## Backend
+    - cd Devclient_server
+    - npm run start
+    - open aws instance and copy ipv4 ip:13.53.206.149
+    - now go to mongo db atlas: network; create new ip access list address add 13.53.206.149:ip 
+    - allowed ec2 instance public ip on mongodb server
+    - backend run start correctly,
+    - install pm2 for running backend in detached mode/when local system is off: npm install pm2 -g
+    - run start: ubuntu@ip-172-31-34-123:~/DevTinder/DevTinder_server$ pm2 start npm -- start
+    - ┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+      │ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+      ├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────-┤
+      │ 0  │ npm                │ fork     │ 0    │ online    │ 0%       │ 32.3mb    │
+      └────┴────────────────────┴──────────┴──────┴───────────┴───────------┴────────┘
+    - to check logs for checking any issues: pm2 logs
+    - pm2 flush npm 
+    - also we can change name of that npm: pm2 list
+    - to stop pm2:  pm2 stop <name> (name: npm)
+    - to delete npm: pm2 delete npm
+    - to add new name of the process of backend in the background: 
+    - pm2: ubuntu@ip-172-31-34-123:~/DevTinder/DevTinder_server$ pm2 start npm --name "detinderserver" -- start
+
+   frontend: http://13.53.206.149/
+   backend: http://13.53.206.149:8000/
+
+   Domain name: devtinder.com => 13.53.206.149/
+
+   frontend: devtinder.com
+   backend: devtinder.com:8000 => devtinder.com/api
+   nginx proxy pass
+   config nginx: /etc/nginx/sites-available/default
+   server_name 13.53.206.149;
+   - location /api/ {
+        proxy_pass http://localhost:8000/;
+
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+    - Restart nginx server: sudo systemctl restart nginx
+    - Modify the frontend BASE_URL to /api
