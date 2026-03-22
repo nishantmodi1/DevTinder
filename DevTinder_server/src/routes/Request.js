@@ -3,6 +3,8 @@ const { userAuth } = require('../middleware/auth')
 const ConnectionRequest = require('../models/connectionRequest')
 const requestRouter = express.Router()
 const User = require('../models/user')
+const sendEmail = require('../utils/sendEmail')
+
 
 //here fromUserId is the person who already loggedIn
 requestRouter.post('/request/send/:status/:toUserId', userAuth, async(req, res) => {
@@ -40,6 +42,8 @@ requestRouter.post('/request/send/:status/:toUserId', userAuth, async(req, res) 
     })
 
     const data = await connectionRequest.save()
+
+    const emailRes = await sendEmail.run()
 
     //sending a connection request
     res.json({

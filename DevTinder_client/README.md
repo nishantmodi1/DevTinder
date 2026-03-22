@@ -97,3 +97,26 @@
     }
     - Restart nginx server: sudo systemctl restart nginx
     - Modify the frontend BASE_URL to /api
+
+   ## Domain name:
+   - godaddy.com: purchase a Domain name
+   - visit claudflare : help to add domain
+   - edit nameserver in godaddy : change the namserver on godaddy and point it to claudeflare
+   - wait for sometime till your nameserver updated: around 15min
+   - go to my order and open dns management: update doamin proxy from server_name 13.53.206.149 to devtinder.com
+   - dns record: A record in devtinder.com in server_name 13.53.206.149
+   - to secure domain name server: open ssl/tls certificate in claudeflare
+
+   ## sending email via aws ses
+    - create iam user
+    - give access to amazonSesFullAccess
+    - create an identity in Amazon Ses
+    - Verify Your domain name
+    - Verify an email address
+    - install AWS sdk - v3
+    - code example: https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/javascriptv3/example_code/ses#code-examples
+    - setup ses client:
+    - Access credentials should be created on IAM under securitycredencials Tab
+    - add the createclient to env file
+    - write code for sesClient
+    - write code for sending email: make email dynamic by passing more parameters
