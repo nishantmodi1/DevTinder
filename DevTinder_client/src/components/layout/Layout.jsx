@@ -14,7 +14,7 @@ const Layout = () => {
   const fetcUser = async() => {
     // if(!userData) return;
     try {
-      const user = await axios.get(`${BASE_URL}/profile/view`, {withCredentials:true})
+      const user = await axios.get(`${BASE_URL}profile/view`, {withCredentials:true})
 
       dispatch(addUser(user.data))
     } catch (error) {
