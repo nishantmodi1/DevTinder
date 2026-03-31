@@ -74,6 +74,7 @@ const handleSend = () => {
     })
 
     socket.on("receiveMessage", ({ firstName, lastName, text, userId: senderId }) => {
+      if (senderId === userId) return 
       // ✅ server emits userId as the sender — map it to senderId
       setMessages(prev => [...prev, { firstName, lastName, text, senderId }])
     })
