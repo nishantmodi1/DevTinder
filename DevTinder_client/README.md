@@ -110,7 +110,7 @@
    ## sending email via aws ses
     - create iam user
     - give access to amazonSesFullAccess
-    - create an identity in Amazon Ses
+    - create an identity in Amazon Sess
     - Verify Your domain name
     - Verify an email address
     - install AWS sdk - v3
@@ -119,4 +119,29 @@
     - Access credentials should be created on IAM under securitycredencials Tab
     - add the createclient to env file
     - write code for sesClient
-    - write code for sending email: make email dynamic by passing more parameters
+    - write code for sending email: make email dynamic by passing more parameters to the run function
+
+    ## schedule node-cron job in NodeJs 
+    - To schedule task like on a particular tome send email let on 8oclock in the mongodb-connection-string-url
+    - install npm i node-cron, add file for cron job
+    - visit cronitor for more explore
+    - schedule a job
+    - npm date fns 
+    - find all the unique email id woh have got connection request in previous day
+    - send email
+    - visit bee-queue/npm-bull/aws-ses for bulk email for more than 10k user sending cron job email
+    - make sendEmail function dynamic
+
+   ## Real time chat using websockets(socket.io):
+    - Build chat window UI on chat/:targetUserId
+    - setup socket.io in backend
+    - npm i socket.io
+    - setup frontend socket.io-client
+    - initialise the chat
+    - createsocketconnection
+    - Listen to events
+    - Homework: improve UI
+    - HW: fix security bug: auth in  web socket
+    - HW; fix bug: i am not your friend then i should not be able to send message
+    - HW: show green symbolwhen online??? - [last seen 2hrs ago]
+    - HW: Limit messages when fetching from db, 20 messages for the first timea
