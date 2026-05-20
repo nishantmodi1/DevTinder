@@ -76,6 +76,8 @@
     - to add new name of the process of backend in the background: 
     - pm2: ubuntu@ip-172-31-34-123:~/DevTinder/DevTinder_server$ pm2 start npm --name "detinderserver" -- start
 
+    - sudo systemctl restart nginx
+
    frontend: http://13.53.206.149/
    backend: http://13.53.206.149:8000/
 

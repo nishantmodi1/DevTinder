@@ -10,6 +10,7 @@ import FeedPage from "./page/FeedPage"
 import Connections from "./components/connections/Connections"
 import Requests from "./components/requests/Requests"
 import Chat from "./components/chat_with_connections/Chat"
+import RootNavigation from "./routes/RootNavigation"
 
 
 function App() {
@@ -17,18 +18,7 @@ function App() {
   return (
     <>
       <Provider store={store}>
-        <BrowserRouter basename="/">
-          <Routes>
-            <Route path='/' element={<Layout />}>
-              <Route path='/feed' element={<FeedPage />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/profile' element={<Profile />} />
-              <Route path='/connections' element={<Connections />} />
-              <Route path='/requests' element={<Requests />} />
-              <Route path='/chat/:targetUserId' element={<Chat />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <RootNavigation />
       </Provider>
     </>
   )
